@@ -5,7 +5,7 @@
 
 Lo script è in grado di navigare le pagine dei siti, interpretare il contenuto HTML per trovare i link corretti, analizzare i documenti PDF per estrarre le informazioni chiave e salvarle in un database locale SQLite.
 
-**Questo script può utilizzare qualche milione di token, usare con la dovuta cautela.**
+**QUESTO SCRIPT PUO' UTILIZZARE QUALCHE _MILIONE_ DI TOKEN, USARE CON LA DOVUTA CAUTELA.**
 
 ## Funzionalità Principali
 
