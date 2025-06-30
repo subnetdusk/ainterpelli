@@ -1,0 +1,21 @@
+# File: .gitignore
+
+# File di ambiente
+.env
+
+# Cache di Python
+__pycache__/
+*.pyc
+
+# Cartelle di virtual environment
+venv/
+.venv/
+
+# File temporanei o di sistema
+.DS_Store
+
+# Cartella dei download temporanei
+downloads/
+
+# Database SQLite
+*.sqlite
