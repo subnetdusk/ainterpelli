@@ -1,4 +1,5 @@
 # AInterpelli - Scraper Cognitivo
+![Screenshot dell'applicazione](esempio.png)
 
 `AInterpelli` è uno scraper intelligente basato su LLM (Google Gemini) progettato per raccogliere, analizzare e archiviare gli interpelli per le supplenze scolastiche dai siti degli Uffici Scolastici Territoriali (UST) della Lombardia.
 
