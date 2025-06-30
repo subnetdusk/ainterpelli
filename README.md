@@ -5,6 +5,8 @@
 
 Lo script è in grado di navigare le pagine dei siti, interpretare il contenuto HTML per trovare i link corretti, analizzare i documenti PDF per estrarre le informazioni chiave e salvarle in un database locale SQLite.
 
+**Questo script può utilizzare qualche milione di token, usare con la dovuta cautela.**
+
 ## Funzionalità Principali
 
 -   **Scraping Cognitivo**: Utilizza **gemini-2.5-flash** per analizzare l'HTML delle pagine e trovare i link agli articoli e ai PDF, rendendo lo script resiliente ai cambiamenti di layout.
