@@ -6,9 +6,9 @@ Lo script è in grado di navigare le pagine dei siti, interpretare il contenuto 
 
 ## Funzionalità Principali
 
--   **Scraping Cognitivo**: Utilizza un gemini-2.5-pro per analizzare l'HTML delle pagine e trovare i link agli articoli e ai PDF, rendendo lo script resiliente ai cambiamenti di layout.
+-   **Scraping Cognitivo**: Utilizza **gemini-2.5-pro** per analizzare l'HTML delle pagine e trovare i link agli articoli e ai PDF, rendendo lo script resiliente ai cambiamenti di layout.
 -   **Analisi PDF**: Invia i documenti PDF all'LLM per estrarre dati strutturati (scuola, classe di concorso, ore, ecc.).
--   **Multiprocessing**: Accelera notevolmente il processo di scraping analizzando più articoli in parallelo, sfruttando tutti i core della CPU.
+-   **Multiprocessing**: Accelera notevolmente il processo di scraping analizzando più link in parallelo.
 -   **Database Locale**: Salva tutti i dati raccolti in un database SQLite (`interpelli.sqlite`) per una facile consultazione e analisi future.
 -   **Interfaccia Interattiva**: Permette all'utente di scegliere se avviare una nuova scansione o interrogare il database esistente.
 -   **Filtri e Esportazione**: Offre un menu per filtrare i risultati salvati (per classe di concorso, ore) e per esportare le viste correnti in un file PDF.
