@@ -4,7 +4,9 @@ import llm_processor
 import time
 import logging
 import os
-import json # <-- ECCO LA CORREZIONE
+import json
+import asyncio
+import aiohttp
 
 def setup_logging():
     logging.basicConfig(
@@ -14,91 +16,123 @@ def setup_logging():
         filemode='w'
     )
 
-def run_simple_diagnostics():
-    setup_logging()
-    logging.info("Avvio Diagnostica Semplice (un solo sito)")
-    logging.info("="*40)
+def select_province_for_test():
+    provinces = list(config.SITES_CONFIG.keys())
+    while True:
+        print("\n--- SELEZIONA PROVINCIA PER LA DIAGNOSTICA ---")
+        for i, province in enumerate(provinces, 1):
+            print(f"{i:2}: {province}")
+        print("---------------------------------------------")
+        try:
+            choice_str = input("Inserisci il numero della provincia da testare (0 per uscire): ")
+            choice = int(choice_str)
+            if choice == 0:
+                return None
+            if 1 <= choice <= len(provinces):
+                return provinces[choice - 1]
+            else:
+                print("Scelta non valida.")
+        except (ValueError, IndexError):
+            print("Input non valido.")
 
-    provincia_test = "Bergamo"
-    base_url = config.SITES_CONFIG[provincia_test]["url"]
+async def run_simple_diagnostics():
+    setup_logging()
+    logging.info("Avvio Diagnostica Semplice (Logica Universale)")
+    print("Avvio diagnostica... L'output verrà salvato nel file 'simple_diagnostics.log'")
     
-    model = config.setup_gemini()
-    if not model:
-        logging.error("Impossibile configurare Gemini. Test interrotto.")
-        print("Impossibile configurare Gemini. Controlla la console.")
+    provincia_test = select_province_for_test()
+    if not provincia_test:
+        print("Nessuna provincia selezionata. Uscita.")
         return
 
-    logging.info(f"\n--- TEST: Provincia di {provincia_test.upper()} ---")
-    logging.info(f"URL Base: {base_url}")
-
-    try:
-        # --- FASE 1: Trovare i link agli articoli con l'LLM ---
-        logging.info("\n[FASE 1] Recupero HTML pagina elenco e analisi con LLM...")
-        html_content_list = scraper.get_page_html(base_url)
-        if not html_content_list:
-            logging.error(">>> RISULTATO FASE 1: FALLITO - Impossibile recuperare l'HTML della pagina elenco.")
-            return
-
-        page_data = llm_processor.extract_page_links_with_gemini(model, html_content_list, base_url, logging)
-        article_links = page_data.get("article_links", [])
-
-        if not article_links:
-            logging.warning(">>> RISULTATO FASE 1: FALLITO - L'LLM non ha trovato link ad articoli.")
-            return
-
-        logging.info(f">>> RISULTATO FASE 1: SUCCESSO - L'LLM ha trovato {len(article_links)} link.")
-        
-        # --- FASE 2: Trovare il link al PDF nella pagina del primo articolo con l'LLM ---
-        first_article_url = article_links[0]
-        logging.info(f"\n[FASE 2] Recupero HTML articolo e ricerca PDF con LLM...")
-        logging.info(f"URL Articolo di test: {first_article_url}")
-        
-        html_content_article = scraper.get_page_html(first_article_url)
-        if not html_content_article:
-            logging.error(f">>> RISULTATO FASE 2: FALLITO - Impossibile recuperare l'HTML dell'articolo: {first_article_url}")
-            return
-
-        pdf_links = llm_processor.find_pdf_link_with_gemini(model, html_content_article, first_article_url, logging)
-
-        if not pdf_links:
-            logging.warning(">>> RISULTATO FASE 2: FALLITO - L'LLM non ha trovato link a PDF nella pagina dell'articolo.")
-            return
-
-        logging.info(f">>> RISULTATO FASE 2: SUCCESSO - L'LLM ha trovato {len(pdf_links)} link a PDF.")
-        
-        # --- FASE 3: Scaricare il PDF ed estrarre i dati con l'LLM ---
-        first_pdf_url = pdf_links[0]
-        logging.info(f"\n[FASE 3] Download PDF e estrazione dati con LLM...")
-        logging.info(f"URL PDF di test: {first_pdf_url}")
-
-        pdf_path = scraper.download_file(first_pdf_url)
-        if not pdf_path:
-            logging.error(">>> RISULTATO FASE 3: FALLITO - Impossibile scaricare il file PDF.")
-            return
-
-        extracted_data = llm_processor.process_pdf_with_gemini(model, pdf_path, logging)
-
-        # Pulizia del file scaricato
-        os.remove(pdf_path)
-        logging.info(f"File temporaneo rimosso: {pdf_path}")
-
-        if not extracted_data:
-            logging.warning(">>> RISULTATO FASE 3: FALLITO - L'LLM non ha estratto dati dal PDF.")
-            return
-        
-        logging.info(">>> RISULTATO FASE 3: SUCCESSO - L'LLM ha estratto i seguenti dati:")
-        logging.info(json.dumps(extracted_data, indent=2, ensure_ascii=False))
-
-        logging.info(f"\n--- TEST per {provincia_test.upper()} COMPLETATO CON SUCCESSO ---")
+    base_url = config.SITES_CONFIG[provincia_test]["url"]
     
-    except Exception as e:
-        logging.error(f">>> ERRORE IMPREVISTO per {provincia_test}: {e}", exc_info=True)
+    models = config.setup_gemini()
+    if not models:
+        logging.error("Impossibile configurare Gemini. Test interrotto.")
+        return
+
+    logging.info("="*40)
+    logging.info(f"\n--- TEST: Provincia di {provincia_test.upper()} ---")
+    
+    async with aiohttp.ClientSession() as session:
+        try:
+            logging.info("\n[FASE 1] Trovare i link agli articoli...")
+            html_content_list = await scraper.get_page_html(session, base_url)
+            if not html_content_list: 
+                logging.error(">>> RISULTATO FASE 1: FALLITO - Impossibile recuperare l'HTML della pagina elenco.")
+                return
+            
+            article_links = await llm_processor.extract_page_links_with_gemini(models, html_content_list, base_url, logging)
+            if not article_links:
+                logging.warning(">>> RISULTATO FASE 1: FALLITO - L'LLM non ha trovato link ad articoli.")
+                return
+
+            first_article_url = article_links[0]
+            logging.info(f"Articolo di test selezionato: {first_article_url}")
+
+            logging.info("\n[FASE 2] Analisi universale della pagina articolo...")
+            html_content_article = await scraper.get_page_html(session, first_article_url)
+            if not html_content_article: 
+                logging.error(f">>> RISULTATO FASE 2: FALLITO - Impossibile recuperare l'HTML dell'articolo: {first_article_url}")
+                return
+
+            analysis_result = await llm_processor.analyze_article_page_and_get_data_or_links(models, html_content_article, first_article_url, logging)
+            if not analysis_result:
+                logging.error(">>> RISULTATO FASE 2: FALLITO - L'analisi della pagina non ha restituito un risultato valido.")
+                return
+            
+            logging.info(f">>> RISULTATO FASE 2: SUCCESSO - L'analisi ha prodotto un risultato.")
+
+            logging.info("\n[FASE 3] Azione basata sull'analisi...")
+            file_links = analysis_result.get("file_links", [])
+            gdrive_links = analysis_result.get("gdrive_links", [])
+            portal_links = analysis_result.get("portal_links", [])
+            extracted_data_from_html = analysis_result.get("extracted_data")
+
+            if file_links:
+                doc_url = file_links[0]
+                logging.info(f"Azione: Scaricare il primo file diretto trovato: {doc_url}")
+                file_path = await scraper.download_direct_file(session, doc_url)
+                if file_path:
+                    extracted_data = await llm_processor.process_pdf_with_gemini(models, file_path, logging)
+                    os.remove(file_path)
+                    if extracted_data:
+                        logging.info(f">>> RISULTATO FASE 3: SUCCESSO - Dati estratti dal file: {json.dumps(extracted_data, indent=2, ensure_ascii=False)}")
+            
+            elif gdrive_links:
+                doc_url = gdrive_links[0]
+                logging.info(f"Azione: Scaricare il primo file Google Drive trovato: {doc_url}")
+                file_path = await scraper.download_google_drive_file(session, doc_url)
+                if file_path:
+                    extracted_data = await llm_processor.process_pdf_with_gemini(models, file_path, logging)
+                    os.remove(file_path)
+                    if extracted_data:
+                        logging.info(f">>> RISULTATO FASE 3: SUCCESSO - Dati estratti da Google Drive: {json.dumps(extracted_data, indent=2, ensure_ascii=False)}")
+
+            elif portal_links:
+                portal_url = portal_links[0]
+                logging.info(f"Azione: Analizzare HTML del portale: {portal_url}")
+                portal_html = await scraper.get_page_html(session, portal_url)
+                if portal_html:
+                    extracted_data = await llm_processor.extract_data_from_html(models, portal_html, logging)
+                    if extracted_data:
+                        logging.info(f">>> RISULTATO FASE 3: SUCCESSO - Dati estratti dal portale: {json.dumps(extracted_data, indent=2, ensure_ascii=False)}")
+
+            elif extracted_data_from_html:
+                logging.info(f">>> RISULTATO FASE 3: SUCCESSO - Dati estratti dall'HTML: {json.dumps(extracted_data_from_html, indent=2, ensure_ascii=False)}")
+
+            else:
+                logging.warning(">>> RISULTATO FASE 3: FALLITO - L'LLM non ha trovato né link a documenti né dati estraibili.")
+
+        except Exception as e:
+            logging.error(f">>> ERRORE IMPREVISTO: {e}", exc_info=True)
 
     logging.info("\n" + "="*40)
-    logging.info("Diagnostica semplice completata. Controllare simple_diagnostics.log.")
-
+    print("Diagnostica completata. Controllare il file 'simple_diagnostics.log'.")
 
 if __name__ == '__main__':
-    print("Avvio diagnostica semplice... L'output verrà salvato nel file 'simple_diagnostics.log'")
-    run_simple_diagnostics()
-    print("Diagnostica completata. Controllare il file 'simple_diagnostics.log' per i risultati.")
+    try:
+        asyncio.run(run_simple_diagnostics())
+    except KeyboardInterrupt:
+        print("\nDiagnostica interrotta dall'utente.")

@@ -1,5 +1,6 @@
 import sqlite3
 from sqlite3 import Error
+import os
 
 DB_FILE = "interpelli.sqlite"
 
@@ -72,22 +73,18 @@ def setup_database():
         print("Errore! Impossibile creare la connessione al database.")
 
 def get_all_interpelli(conn):
-    """Recupera tutti i record, ordinati di default per classe di concorso."""
     cur = conn.cursor()
-    # ORDINAMENTO DI DEFAULT AGGIORNATO
-    cur.execute("SELECT * FROM interpelli ORDER BY classe_di_concorso, provincia, data_inserimento DESC")
+    cur.execute("SELECT * FROM interpelli ORDER BY provincia, classe_di_concorso, data_inserimento DESC")
     rows = cur.fetchall()
     return rows
 
 def get_unique_classi_di_concorso(conn):
-    """Recupera tutti i valori unici e non nulli di 'classe_di_concorso'."""
     cur = conn.cursor()
     cur.execute("SELECT DISTINCT classe_di_concorso FROM interpelli WHERE classe_di_concorso IS NOT NULL ORDER BY classe_di_concorso")
     rows = [row[0] for row in cur.fetchall()]
     return rows
 
 def get_interpelli_by_filter(conn, filters):
-    """Recupera i record in base a un dizionario di filtri (CDC o ore minime)."""
     base_query = "SELECT * FROM interpelli WHERE 1=1"
     params = []
 
@@ -99,9 +96,22 @@ def get_interpelli_by_filter(conn, filters):
         base_query += " AND numero_di_ore >= ?"
         params.append(filters['min_ore'])
     
-    base_query += " ORDER BY classe_di_concorso, provincia, data_inserimento DESC"
+    base_query += " ORDER BY provincia, classe_di_concorso, data_inserimento DESC"
     
     cur = conn.cursor()
     cur.execute(base_query, params)
     rows = cur.fetchall()
     return rows
+
+def delete_database_file():
+    """Cancella il file del database se esiste."""
+    if os.path.exists(DB_FILE):
+        try:
+            os.remove(DB_FILE)
+            return True
+        except OSError as e:
+            print(f"Errore durante la cancellazione del database: {e}")
+            return False
+    else:
+        # Il file non esiste, quindi l'operazione può considerarsi riuscita
+        return True

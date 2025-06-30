@@ -1,155 +1,42 @@
-2025-06-30 10:10:36,593 - INFO - Avvio Diagnostica Semplice (un solo sito)
-2025-06-30 10:10:36,593 - INFO - ========================================
-2025-06-30 10:10:36,593 - INFO - 
---- TEST: Provincia di BERGAMO ---
-2025-06-30 10:10:36,593 - INFO - URL Base: https://bergamo.istruzionelombardia.gov.it/argomento/interpelli-ricerca-supplenti/
-2025-06-30 10:10:36,593 - INFO - 
-[FASE 1] Recupero HTML pagina elenco e analisi con LLM...
-2025-06-30 10:10:37,383 - INFO - Invio HTML da https://bergamo.istruzionelombardia.gov.it/argomento/interpelli-ricerca-supplenti/ a Gemini per l'estrazione dei link...
-2025-06-30 10:10:37,383 - INFO - 
---- PROMPT INVIATO A GEMINI (LINK EXTRACTION) ---
-
-Sei un web scraper esperto. Analizza il seguente contenuto HTML.
-Il tuo compito è identificare due tipi di link:
-1.  **Link ad articoli/pagine di dettaglio**: Cerca link `<a>` che puntano a pagine che sembrano essere avvisi o dettagli di un interpello. Presta particolare attenzione all'attributo `href` e al testo del link. Parole chiave da cercare sono "interpello", "interpelli", "avviso", "supplenza", "gestioneinterpelli". Includi anche link a domini esterni come "axioscloud.it" se contengono queste parole chiave.
-2.  **Link alla pagina successiva**: Cerca un link per la paginazione, etichettato come "Successivo", "Next", ">", o un numero di pagina più alto di quello corrente.
-
-**REGOLA DI ESCLUSIONE IMPORTANTE**: Ignora e non includere nell'output i link il cui testo del link è ESATTAMENTE "Interpelli ricerca supplenti" o "Interpelli-ricerca-supplenti". Questi sono link di categoria, non articoli specifici.
-
-Restituisci i risultati in un oggetto JSON con questo esatto formato:
-{"article_links": ["url_completo_1", "url_completo_2"], "next_page_url": "url_completo_pagina_successiva_o_null"}
-
-Assicurati che tutti gli URL restituiti siano assoluti. L'URL di base per questa pagina è: https://bergamo.istruzionelombardia.gov.it/argomento/interpelli-ricerca-supplenti/
-Se non trovi un link per la pagina successiva, il valore di "next_page_url" deve essere null.
-
---- FINE PROMPT ---
-2025-06-30 10:11:15,316 - INFO - 
---- RISPOSTA RICEVUTA DA GEMINI (LINK EXTRACTION) ---
+2025-06-30 13:26:19,730 - INFO - Avvio Diagnostica Semplice (Logica Universale)
+2025-06-30 13:26:22,483 - INFO - ========================================
+2025-06-30 13:26:22,483 - INFO - 
+--- TEST: Provincia di LODI ---
+2025-06-30 13:26:22,483 - INFO - 
+[FASE 1] Trovare i link agli articoli...
+2025-06-30 13:26:23,306 - INFO - Invio HTML da https://lodi.istruzionelombardia.gov.it/argomento/interpelli-ricerca-supplenti/ a Gemini (fast) per l'estrazione dei link agli articoli...
+2025-06-30 13:27:44,194 - INFO - Trovati 10 link di articoli.
+2025-06-30 13:27:44,194 - INFO - Articolo di test selezionato: https://lodi.istruzionelombardia.gov.it/ic-castiglione-dadda-11/
+2025-06-30 13:27:44,194 - INFO - 
+[FASE 2] Analisi universale della pagina articolo...
+2025-06-30 13:27:44,374 - INFO - Invio HTML da https://lodi.istruzionelombardia.gov.it/ic-castiglione-dadda-11/ a Gemini (fast) per l'analisi universale...
+2025-06-30 13:29:59,060 - INFO - 
+--- RISPOSTA RICEVUTA (ANALISI UNIVERSALE) ---
 ```json
 {
-  "article_links": [
-    "https://bergamo.istruzionelombardia.gov.it/interpelli-per-il-conferimento-di-supplenza-personale-docente-n-168/",
-    "https://bergamo.istruzionelombardia.gov.it/interpelli-per-il-conferimento-di-supplenza-personale-docente-n-167/",
-    "https://bergamo.istruzionelombardia.gov.it/interpelli-per-il-conferimento-di-supplenza-personale-docente-n-166/",
-    "https://bergamo.istruzionelombardia.gov.it/interpelli-per-il-conferimento-di-supplenza-personale-docente-n-165/",
-    "https://bergamo.istruzionelombardia.gov.it/interpelli-per-il-conferimento-di-supplenza-personale-docente-n-164/",
-    "https://bergamo.istruzionelombardia.gov.it/interpelli-per-il-conferimento-di-supplenza-personale-docente-n-163/",
-    "https://bergamo.istruzionelombardia.gov.it/interpelli-per-il-conferimento-di-supplenza-personale-docente-n-162/",
-    "https://bergamo.istruzionelombardia.gov.it/interpelli-per-il-conferimento-di-supplenza-personale-docente-n-161/",
-    "https://bergamo.istruzionelombardia.gov.it/interpelli-per-il-conferimento-di-supplenza-personale-docente-n-160/",
-    "https://bergamo.istruzionelombardia.gov.it/interpelli-per-il-conferimento-di-supplenza-personale-docente-n-159/"
+  "file_links": [],
+  "gdrive_links": [
+    "https://drive.google.com/file/d/1z82zYa72Nqsz245dnDPyvEiY5qFWS6Cm/view?usp=sharing"
   ],
-  "next_page_url": "https://bergamo.istruzionelombardia.gov.it/argomento/interpelli-ricerca-supplenti/page/2/"
+  "portal_links": [],
+  "extracted_data": null
 }
 ```
---- FINE RISPOSTA ---
-2025-06-30 10:11:15,317 - INFO - Trovati 10 link di articoli. Pagina successiva: https://bergamo.istruzionelombardia.gov.it/argomento/interpelli-ricerca-supplenti/page/2/
-2025-06-30 10:11:15,317 - INFO - >>> RISULTATO FASE 1: SUCCESSO - L'LLM ha trovato 10 link.
-2025-06-30 10:11:15,317 - INFO - 
-[FASE 2] Recupero HTML articolo e ricerca PDF con LLM...
-2025-06-30 10:11:15,317 - INFO - URL Articolo di test: https://bergamo.istruzionelombardia.gov.it/interpelli-per-il-conferimento-di-supplenza-personale-docente-n-168/
-2025-06-30 10:11:15,504 - INFO - Invio HTML da https://bergamo.istruzionelombardia.gov.it/interpelli-per-il-conferimento-di-supplenza-personale-docente-n-168/ a Gemini per la ricerca del PDF...
-2025-06-30 10:11:15,504 - INFO - 
---- PROMPT INVIATO A GEMINI (PDF FINDER) ---
-
-Sei un assistente specializzato nel trovare file. Analizza il seguente HTML della pagina di un articolo.
-Il tuo unico compito è trovare il link diretto al documento PDF finale menzionato nella pagina.
-Cerca parole chiave come "allegato", "scarica", "download", o semplicemente un link che finisce con `.pdf`.
-
-Restituisci i risultati in un oggetto JSON con questo esatto formato:
-{"pdf_links": ["url_completo_del_pdf_1", "url_completo_del_pdf_2"]}
-
-Assicurati che tutti gli URL restituiti siano assoluti. L'URL di base per questa pagina è: https://bergamo.istruzionelombardia.gov.it/interpelli-per-il-conferimento-di-supplenza-personale-docente-n-168/
-Se non trovi nessun link a un PDF, restituisci una lista vuota: `[]`.
-
---- FINE PROMPT ---
-2025-06-30 10:11:30,469 - INFO - 
---- RISPOSTA RICEVUTA DA GEMINI (PDF FINDER) ---
-```json
-{
-  "pdf_links": [
-    "https://bergamo.istruzionelombardia.gov.it/interpelli-per-il-conferimento-di-supplenza-personale-docente-n-168/?aid=87039&sa=0"
-  ]
+2025-06-30 13:29:59,060 - INFO - >>> RISULTATO FASE 2: SUCCESSO - L'analisi ha prodotto un risultato.
+2025-06-30 13:29:59,060 - INFO - 
+[FASE 3] Azione basata sull'analisi...
+2025-06-30 13:29:59,060 - INFO - Azione: Scaricare il primo file Google Drive trovato: https://drive.google.com/file/d/1z82zYa72Nqsz245dnDPyvEiY5qFWS6Cm/view?usp=sharing
+2025-06-30 13:30:02,097 - INFO - Invio del file 'downloads\drive.google.com_file_d_1z82zYa72Nqsz245dnDPyvEiY5qFWS6Cm_view_usp_sharing.pdf' a Gemini (powerful) per l'analisi dei dati...
+2025-06-30 13:30:04,939 - INFO - File caricato con successo: downloads\drive.google.com_file_d_1z82zYa72Nqsz245dnDPyvEiY5qFWS6Cm_view_usp_sharing.pdf
+2025-06-30 13:30:20,880 - INFO - Dati estratti con successo.
+2025-06-30 13:30:20,880 - INFO - >>> RISULTATO FASE 3: SUCCESSO - Dati estratti da Google Drive: {
+  "nome_scuola": "Istituto Comprensivo \"Romeo Fusari\"",
+  "indirizzo": "Via A. De Gasperi, 30",
+  "citta": "Castiglione d'Adda",
+  "data_fine_incarico": "18/06/2025",
+  "classe_di_concorso": null,
+  "numero_di_ore": 15,
+  "tipo_cattedra": "Part-time"
 }
-```
---- FINE RISPOSTA ---
-2025-06-30 10:11:30,469 - INFO - Trovati 1 link a PDF.
-2025-06-30 10:11:30,469 - INFO - >>> RISULTATO FASE 2: SUCCESSO - L'LLM ha trovato 1 link a PDF.
-2025-06-30 10:11:30,469 - INFO - 
-[FASE 3] Download PDF e estrazione dati con LLM...
-2025-06-30 10:11:30,469 - INFO - URL PDF di test: https://bergamo.istruzionelombardia.gov.it/interpelli-per-il-conferimento-di-supplenza-personale-docente-n-168/?aid=87039&sa=0
-2025-06-30 10:11:31,193 - INFO - Invio del file 'downloads\bergamo.istruzionelombardia.gov.it_interpelli_per_il_conferimento_di_supplenza_personale_docente_n_168__aid_87039_sa_0.pdf' a Gemini per l'analisi dei dati...
-2025-06-30 10:11:34,072 - INFO - File caricato con successo: downloads\bergamo.istruzionelombardia.gov.it_interpelli_per_il_conferimento_di_supplenza_personale_docente_n_168__aid_87039_sa_0.pdf
-2025-06-30 10:11:34,072 - INFO - 
---- PROMPT INVIATO A GEMINI (PDF EXTRACTION) ---
-
-Analizza il documento di interpello fornito e estrai le seguenti informazioni in formato JSON.
-Se un'informazione non è presente, lascia il campo come null.
-
-Formato JSON richiesto:
-{
-  "nome_scuola": "Nome completo dell'istituto scolastico",
-  "indirizzo": "Indirizzo completo della scuola (via, numero civico)",
-  "citta": "Città della scuola",
-  "data_fine_incarico": "Data di fine dell'incarico (formato DD/MM/YYYY)",
-  "classe_di_concorso": "Codice della classe di concorso (es. A028, A041)",
-  "numero_di_ore": "Numero intero di ore settimanali",
-  "tipo_cattedra": "Descrizione del tipo di cattedra (es. Cattedra Interna, Spezzone, COE)"
-}
-
-Analizza attentamente il documento per trovare tutti i dati. Presta particolare attenzione alle date e alle classi di concorso.
-
---- FINE PROMPT ---
-2025-06-30 10:12:03,381 - INFO - 
---- RISPOSTA RICEVUTA DA GEMINI (PDF EXTRACTION) per downloads\bergamo.istruzionelombardia.gov.it_interpelli_per_il_conferimento_di_supplenza_personale_docente_n_168__aid_87039_sa_0.pdf ---
-```json
-[
-  {
-    "nome_scuola": "I. C. URGNANO",
-    "indirizzo": null,
-    "citta": "URGNANO",
-    "data_fine_incarico": "13/06/2025",
-    "classe_di_concorso": "AC25",
-    "numero_di_ore": 18,
-    "tipo_cattedra": "Supplenza breve"
-  },
-  {
-    "nome_scuola": "I. C. \"S. LUCIA\"",
-    "indirizzo": null,
-    "citta": "BERGAMO",
-    "data_fine_incarico": "30/06/2025",
-    "classe_di_concorso": "ADAA",
-    "numero_di_ore": 24,
-    "tipo_cattedra": "Supplenza"
-  }
-]
-```
---- FINE RISPOSTA ---
-2025-06-30 10:12:03,382 - INFO - Dati estratti con successo.
-2025-06-30 10:12:03,382 - INFO - File temporaneo rimosso: downloads\bergamo.istruzionelombardia.gov.it_interpelli_per_il_conferimento_di_supplenza_personale_docente_n_168__aid_87039_sa_0.pdf
-2025-06-30 10:12:03,382 - INFO - >>> RISULTATO FASE 3: SUCCESSO - L'LLM ha estratto i seguenti dati:
-2025-06-30 10:12:03,382 - INFO - [
-  {
-    "nome_scuola": "I. C. URGNANO",
-    "indirizzo": null,
-    "citta": "URGNANO",
-    "data_fine_incarico": "13/06/2025",
-    "classe_di_concorso": "AC25",
-    "numero_di_ore": 18,
-    "tipo_cattedra": "Supplenza breve"
-  },
-  {
-    "nome_scuola": "I. C. \"S. LUCIA\"",
-    "indirizzo": null,
-    "citta": "BERGAMO",
-    "data_fine_incarico": "30/06/2025",
-    "classe_di_concorso": "ADAA",
-    "numero_di_ore": 24,
-    "tipo_cattedra": "Supplenza"
-  }
-]
-2025-06-30 10:12:03,382 - INFO - 
---- TEST per BERGAMO COMPLETATO CON SUCCESSO ---
-2025-06-30 10:12:03,382 - INFO - 
+2025-06-30 13:30:20,881 - INFO - 
 ========================================
-2025-06-30 10:12:03,382 - INFO - Diagnostica semplice completata. Controllare simple_diagnostics.log.

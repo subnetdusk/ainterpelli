@@ -3,6 +3,10 @@
 # File di ambiente
 .env
 
+# File di logging e report
+*.log
+*.pdf
+
 # Cache di Python
 __pycache__/
 *.pyc

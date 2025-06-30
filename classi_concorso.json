@@ -1,0 +1,207 @@
+[
+  {
+    "codice": "00AA",
+    "descrizione": "Infanzia: posto comune",
+    "alias": ["infanzia", "scuola dell'infanzia", "posto comune infanzia", "aaaa"]
+  },
+  {
+    "codice": "00EE",
+    "descrizione": "Primaria: posto comune",
+    "alias": ["primaria", "scuola primaria", "posto comune primaria", "eeee"]
+  },
+  {
+    "codice": "A-01",
+    "descrizione": "Disegno e storia dell'arte nell'istruzione secondaria di I e di II grado",
+    "alias": ["disegno e storia dell'arte", "storia dell'arte", "a01", "a-01"]
+  },
+  {
+    "codice": "A-11",
+    "descrizione": "Discipline letterarie e latino",
+    "alias": ["discipline letterarie e latino", "lettere e latino", "a11", "a-11"]
+  },
+  {
+    "codice": "A-12",
+    "descrizione": "Discipline letterarie nell'istruzione secondaria di I e II grado",
+    "alias": ["discipline letterarie", "lettere", "italiano", "a12", "a-12"]
+  },
+  {
+    "codice": "A-13",
+    "descrizione": "Discipline letterarie, latino e greco",
+    "alias": ["discipline letterarie latino e greco", "lettere classiche", "a13", "a-13"]
+  },
+  {
+    "codice": "A-18",
+    "descrizione": "Filosofia e Scienze umane",
+    "alias": ["filosofia e scienze umane", "scienze umane", "a18", "a-18"]
+  },
+  {
+    "codice": "A-19",
+    "descrizione": "Filosofia e Storia",
+    "alias": ["filosofia e storia", "a19", "a-19"]
+  },
+  {
+    "codice": "A-20",
+    "descrizione": "Fisica",
+    "alias": ["fisica", "a20", "a-20"]
+  },
+  {
+    "codice": "A-21",
+    "descrizione": "Geografia",
+    "alias": ["geografia", "a21", "a-21"]
+  },
+  {
+    "codice": "A-22",
+    "descrizione": "Lingue e culture straniere nell'istruzione secondaria di I e II grado",
+    "alias": ["lingue e culture straniere", "lingue straniere", "a22", "a-22"]
+  },
+  {
+    "codice": "A-23",
+    "descrizione": "Lingua italiana per discenti di lingua straniera (alloglotti)",
+    "alias": ["italiano per stranieri", "l2", "a23", "a-23"]
+  },
+  {
+    "codice": "A-26",
+    "descrizione": "Matematica",
+    "alias": ["matematica", "a26", "a-26"]
+  },
+  {
+    "codice": "A-27",
+    "descrizione": "Matematica e Fisica",
+    "alias": ["matematica e fisica", "mat e fisica", "a27", "a-27"]
+  },
+  {
+    "codice": "A-28",
+    "descrizione": "Matematica e scienze",
+    "alias": ["matematica e scienze", "mat e scienze", "a28", "a-28"]
+  },
+  {
+    "codice": "A-30",
+    "descrizione": "Musica nell'istruzione secondaria di I grado e II grado",
+    "alias": ["musica", "educazione musicale", "a30", "a-30"]
+  },
+  {
+    "codice": "A-40",
+    "descrizione": "Scienze e tecnologie elettriche ed elettroniche",
+    "alias": ["elettrotecnica", "elettronica", "a40", "a-40"]
+  },
+  {
+    "codice": "A-41",
+    "descrizione": "Scienze e tecnologie informatiche",
+    "alias": ["informatica", "scienze e tecnologie informatiche", "a41", "a-41"]
+  },
+  {
+    "codice": "A-42",
+    "descrizione": "Scienze e tecnologie meccaniche",
+    "alias": ["meccanica", "a42", "a-42"]
+  },
+  {
+    "codice": "A-45",
+    "descrizione": "Scienze economico-aziendali",
+    "alias": ["economia aziendale", "scienze economico-aziendali", "a45", "a-45"]
+  },
+  {
+    "codice": "A-46",
+    "descrizione": "Scienze giuridico-economiche",
+    "alias": ["diritto ed economia", "scienze giuridico-economiche", "a46", "a-46"]
+  },
+  {
+    "codice": "A-47",
+    "descrizione": "Scienze matematiche applicate",
+    "alias": ["matematica applicata", "scienze matematiche applicate", "a47", "a-47"]
+  },
+  {
+    "codice": "A-48",
+    "descrizione": "Scienze motorie e sportive nell'istruzione secondaria di I grado e II grado",
+    "alias": ["scienze motorie", "educazione fisica", "motoria", "a48", "a-48"]
+  },
+  {
+    "codice": "A-50",
+    "descrizione": "Scienze naturali, chimiche e biologiche",
+    "alias": ["scienze naturali", "chimica", "biologia", "a50", "a-50"]
+  },
+  {
+    "codice": "A-54",
+    "descrizione": "Storia dell'arte",
+    "alias": ["storia dell'arte", "a54", "a-54"]
+  },
+  {
+    "codice": "A-60",
+    "descrizione": "Tecnologia nella scuola secondaria di I grado",
+    "alias": ["tecnologia", "educazione tecnica", "a60", "a-60"]
+  },
+  {
+    "codice": "A-66",
+    "descrizione": "Trattamento testi, dati ed applicazioni. Informatica (ad esaurimento)",
+    "alias": ["trattamento testi", "a66", "a-66"]
+  },
+  {
+    "codice": "AA22",
+    "descrizione": "Lingue e culture straniere (FRANCESE)",
+    "alias": ["francese", "lingua francese", "aa22"]
+  },
+  {
+    "codice": "AB22",
+    "descrizione": "Lingue e culture straniere (INGLESE)",
+    "alias": ["inglese", "lingua inglese", "ab22"]
+  },
+  {
+    "codice": "AC22",
+    "descrizione": "Lingue e culture straniere (SPAGNOLO)",
+    "alias": ["spagnolo", "lingua spagnola", "ac22"]
+  },
+  {
+    "codice": "AD22",
+    "descrizione": "Lingue e culture straniere (TEDESCO)",
+    "alias": ["tedesco", "lingua tedesca", "ad22"]
+  },
+  {
+    "codice": "ADEE",
+    "descrizione": "Sostegno nella scuola primaria",
+    "alias": ["sostegno primaria", "sost. primaria"]
+  },
+  {
+    "codice": "ADMM",
+    "descrizione": "Sostegno nella scuola secondaria di I grado",
+    "alias": ["sostegno i grado", "sostegno secondaria di primo grado", "sost. i grado"]
+  },
+  {
+    "codice": "ADSS",
+    "descrizione": "Sostegno nella scuola secondaria di II grado",
+    "alias": ["sostegno ii grado", "sostegno secondaria di secondo grado", "sost. ii grado"]
+  },
+  {
+    "codice": "B-12",
+    "descrizione": "Laboratori di scienze e tecnologie chimiche e microbiologiche",
+    "alias": ["laboratorio chimica", "b12", "b-12"]
+  },
+  {
+    "codice": "B-15",
+    "descrizione": "Laboratori di scienze e tecnologie elettriche ed elettroniche",
+    "alias": ["laboratorio elettronica", "b15", "b-15"]
+  },
+  {
+    "codice": "B-16",
+    "descrizione": "Laboratori di scienze e tecnologie informatiche",
+    "alias": ["laboratorio informatica", "b16", "b-16"]
+  },
+  {
+    "codice": "B-17",
+    "descrizione": "Laboratori di scienze e tecnologie meccaniche",
+    "alias": ["laboratorio meccanica", "b17", "b-17"]
+  },
+  {
+    "codice": "B-20",
+    "descrizione": "Laboratori di servizi enogastronomici, settore cucina",
+    "alias": ["cucina", "servizi enogastronomici", "b20", "b-20"]
+  },
+  {
+    "codice": "B-21",
+    "descrizione": "Laboratori di servizi enogastronomici, settore sala e vendita",
+    "alias": ["sala e vendita", "b21", "b-21"]
+  },
+  {
+    "codice": "EEEM",
+    "descrizione": "Educazione motoria scuola primaria",
+    "alias": ["motoria primaria", "educazione motoria primaria"]
+  }
+]
